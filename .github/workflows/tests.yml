@@ -6,4 +6,6 @@ jobs:
     runs-on: ubuntu-latest
     container: docker.io/library/postgres:15
     steps:
-      - run: pg_restore --version && pg_restore --help
+      - run: |
+          pg_isready
+          echo $?
