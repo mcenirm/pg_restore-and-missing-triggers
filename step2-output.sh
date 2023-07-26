@@ -1,2 +1,2 @@
-pg_restore --list ${PGDATABASE}-dump.pg
-false TODO implement
+r () { pg_restore --file=${PGDATABASE}-"$@" ${PGDATABASE}-dump.pg ; }
+r toc.txt --list
