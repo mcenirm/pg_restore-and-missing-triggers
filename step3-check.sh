@@ -18,6 +18,6 @@ g toc.txt -F -n -e ' TABLE public t1 '
 g toc.txt -F -n -e ' TABLE DATA public t1 '
 g toc.txt -F -n -e ' TRIGGER public t1 update_t1_updatetime '
 
-g itemized-schema-only -n -e '^CREATE TABLE public.t1 '
+g itemized-schema-only.sql -n -e '^CREATE TABLE public.t1 '
 
 $exit_status
