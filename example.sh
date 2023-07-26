@@ -1,7 +1,17 @@
-separator=''
+cat <<'EOF'
+## Example
+
+`pg_restore` does not provide an obvious way to specify a trigger
+when itemizing objects while generating an SQL script from a 
+`pg_dump` archive.
+
+In the example below, the trigger `update_t1_updatetime` is included
+only in the "full" examples, where no itemizing is done.
+EOF
+
 heading () {
   local first=$1 ; shift
-  printf "$separator"
+  printf '\n'
   printf '### `%s' "$first"
   if [ $# -gt 0 ]
   then
@@ -9,7 +19,6 @@ heading () {
   fi
   printf '`\n'
   printf '\n'
-  separator='\n'
 }
 
 sqlblock () {
@@ -52,6 +61,7 @@ options=(
   '--schema-only --function=update_updatetime()'
   '--schema-only --table=t1'
   '--schema-only --trigger=update_t1_updatetime'
+  '--schema-only --function=update_updatetime() --table=t1 --trigger=update_t1_updatetime'
 )
 for option in "${options[@]}"
 do
