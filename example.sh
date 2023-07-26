@@ -33,16 +33,23 @@ query () {
   sqlblock psql "$@"
 }
 
+table () {
+  heading "psql $*"
+  psql --html "$@"
+}
+
 dump    --schema-only
 restore --schema-only
-query -c '\df'
-query -c '\dt'
-query -c '\dy'
+table -c '\df'
+table -c '\dt'
+table -c '\dy'
+query -c '\sf update_updatetime()'
+table -c '\d t1'
 
 options=(
   --section=pre-data
   --section=post-data
-  '--schema-only --function=udpate_updatetime'
+  '--schema-only --function=update_updatetime()'
   '--schema-only --table=t1'
   '--schema-only --trigger=update_t1_updatetime'
 )
