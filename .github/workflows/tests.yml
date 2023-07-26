@@ -27,8 +27,9 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     steps:
+      - uses: actions/checkout@v3
       - run: |
-          psql -l
+          psql --echo-queries --variable=ON_ERROR_STOP=1 --file=tests.sql
         env:
           # The hostname used to communicate with the PostgreSQL service container
           PGHOST: postgres
