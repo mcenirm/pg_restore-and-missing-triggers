@@ -23,18 +23,11 @@ check_x () {
     actual=No
   fi
 
-  if [ Yes = "$expected" ]
-  then
-    bgcolor=khaki
-  else
-    bgcolor=blue
-  fi
-
   if [ "$expected" = "$actual" ]
   then
-    printf ' <span bgcolor="dark%s">%s</span> |' "$bgcolor" "$expected"
+    printf ' %s |' "$expected"
   else
-    printf ' <span bgcolor="%s">~~%s~~</span><br>***%s*** |' "$bgcolor" "$expected" "$actual"
+    printf ' ~~%s~~ ***%s*** |' "$expected" "$actual"
     exit_status=false
   fi
 }
