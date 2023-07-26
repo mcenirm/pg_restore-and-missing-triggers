@@ -9,7 +9,16 @@ jobs:
     strategy:
       matrix:
         image:
-          - docker.io/library/postgres:15
+          - "docker.io/library/postgres:16"
+          - "docker.io/library/postgres:15"
+          - "docker.io/library/postgres:14"
+          - "docker.io/library/postgres:13"
+          - "docker.io/library/postgres:12"
+          - "docker.io/library/postgres:11"
+          - "docker.io/library/postgres:10"
+          - "docker.io/library/postgres:9.6"
+          - "docker.io/library/postgres:9.5"
+          - "docker.io/library/postgres:9.4"
     runs-on: ubuntu-latest
     container: ${{ matrix.image }}
     services:
