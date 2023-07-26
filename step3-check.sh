@@ -60,6 +60,7 @@ cat <<EOF
 | File | Function | Table | Data | Trigger |
 | ---- | -------- | ----- | ---- | ------- |
 EOF
+filenames=()
 while IFS=, read -r File Function Table Data Trigger
 do
   case "$File" in
@@ -70,6 +71,7 @@ do
       exit 99
       ;;
   esac
+  filenames+=( "$File" )
   printf '| %q |' "$File"
   check_function "$File" "$Function"
   check_table    "$File" "$Table"
@@ -77,5 +79,19 @@ do
   check_trigger  "$File" "$Trigger"
   printf '\n'
 done < expected.csv
+
+for n in "${filenames[@]}"
+do
+  f=${PGDATABASE}-$n
+  if grep -q -F -e 'update_t1_updatetime' -- "$f"
+  then
+    printf '\n'
+    printf '### `%s`\n' "$f"
+    printf '\n'
+    printf '```\n'
+    grep -n -C2 -F -e 'update_t1_updatetime' -- "$f"
+    printf '```\n'
+  fi
+done
 
 $exit_status
