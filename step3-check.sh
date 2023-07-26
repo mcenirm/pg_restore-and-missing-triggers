@@ -5,7 +5,7 @@ exit_status=true
 
 c () {
   local f=${PGDATABASE}-$1 ; shift
-  if ! grep -q "$@" -- 
+  if ! grep -q "$@" -- "$f"
   then
     (
       printf '!! grep check failed for file: %q\n++' "$f"
