@@ -1,29 +1,52 @@
-trim () {
-  grep -v -e ^-- -e '^$' -e '^SET ' -e '^SELECT ' || :
+separator=''
+heading () {
+  local first=$1 ; shift
+  printf "$separator"
+  printf '### `%s' "$first"
+  if [ $# -gt 0 ]
+  then
+    printf ' %s' "$@"
+  fi
+  printf '`\n'
+  printf '\n'
+  separator='\n'
 }
 
-run () {
-  local program=$1 ; shift
-  local option=$1 ; shift
-  local command=(
-    "$program"
-     --no-owner
-     --no-privileges
-     "$option"
-  )
-  [ $# -gt 0 ] && command+=( "$@" )
-
-  printf '### `%s %s`\n' "$program" "$option"
-  printf '\n'
+sqlblock () {
   printf '```sql\n'
-  "${command[@]}" | trim
+  "$@" | (grep -v -e ^-- -e '^$' -e '^SET ' -e '^SELECT ' || :)
   printf '```\n'
 }
 
-run pg_dump --schema-only
+dump () {
+  heading "pg_dump $*"
+  sqlblock pg_dump --no-owner --no-privileges "$@"
+}
 
-for option in '--schema-only' '--trigger=update_t1_updatetime'
+restore () {
+  heading "pg_restore $*"
+  sqlblock pg_restore --no-owner --no-privileges --file=- "$@" --file=- ${PGDATABASE}-dump.pg
+}
+
+query () {
+  heading "psql $*"
+  sqlblock psql "$@"
+}
+
+dump    --schema-only
+restore --schema-only
+query -c '\df'
+query -c '\dt'
+query -c '\dy'
+
+options=(
+  --section=pre-data
+  --section=post-data
+  '--schema-only --function=udpate_updatetime'
+  '--schema-only --table=t1'
+  '--schema-only --trigger=update_t1_updatetime'
+)
+for option in "${options[@]}"
 do
-  printf '\n'
-  run pg_restore "$option" --file=- ${PGDATABASE}-dump.pg
+  restore $option
 done
