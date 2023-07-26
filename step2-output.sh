@@ -11,7 +11,7 @@ rf () {
 
 ri () {
   r itemized-"$@" \
-    --function=update_updatetime() \
+    '--function=update_updatetime()' \
     --table=t1 \
     --trigger=update_t1_updatetime
 }
