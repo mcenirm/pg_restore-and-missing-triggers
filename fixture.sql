@@ -20,4 +20,5 @@ INSERT INTO public.t1 (t1_text) VALUES ('c');
 CREATE TRIGGER update_t1_updatetime
     BEFORE UPDATE ON public.t1
     FOR EACH ROW
-    EXECUTE FUNCTION public.update_updatetime();
+    EXECUTE PROCEDURE public.update_updatetime();
+    -- Postgresql 11 and later: EXECUTE FUNCTION public.update_updatetime();
