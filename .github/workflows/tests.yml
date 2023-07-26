@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         image:
-          - "docker.io/library/postgres:16"
+          - "docker.io/library/postgres:16beta2"
           - "docker.io/library/postgres:15"
           - "docker.io/library/postgres:14"
           - "docker.io/library/postgres:13"
