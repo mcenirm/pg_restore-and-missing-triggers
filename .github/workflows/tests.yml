@@ -6,9 +6,31 @@ on:
 
 jobs:
   tests:
+    strategy:
+      matrix:
+        image:
+          - docker.io/library/postgres:15
     runs-on: ubuntu-latest
-    container: docker.io/library/postgres:15
+    container: ${{ matrix.image }}
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: ${{ matrix.image }}
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - run: |
-          pg_isready
-          echo $?
+          psql -l
+        env:
+          # The hostname used to communicate with the PostgreSQL service container
+          POSTGRES_HOST: postgres
+          # The default PostgreSQL port
+          POSTGRES_PORT: 5432
