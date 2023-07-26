@@ -69,6 +69,6 @@ do
   check_table    "$File" "$Table"
   check_data     "$File" "$Data"
   check_trigger  "$File" "$Trigger"
-done < $(head -n+2 expected.csv)
+done < <(head -n+2 expected.csv)
 
 $exit_status
