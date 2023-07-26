@@ -34,4 +34,5 @@ jobs:
           PGHOST: postgres
           # The default PostgreSQL port
           PGPORT: 5432
+          PGUSER: postgres
           PGPASSWORD: postgres
