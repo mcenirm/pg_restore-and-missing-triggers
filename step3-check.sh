@@ -57,6 +57,9 @@ check_trigger () {
 }
 
 cat <<EOF
+
+### Object inclusion checks (expected vs actual)
+
 | File | Function | Table | Data | Trigger |
 | ---- | -------- | ----- | ---- | ------- |
 EOF
