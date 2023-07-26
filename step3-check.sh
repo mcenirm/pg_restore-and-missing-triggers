@@ -53,7 +53,7 @@ check_data () {
 check_trigger () {
   check_x "$@" \
     ' TRIGGER public t1 update_t1_updatetime ' \
-    '^CREATE TRIGGER public\.update_t1_updatetime '
+    '^CREATE TRIGGER update_t1_updatetime '
 }
 
 cat <<EOF
