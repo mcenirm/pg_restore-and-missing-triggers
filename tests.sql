@@ -13,7 +13,6 @@ END;
 $$;
 
 CREATE TABLE public.t1 (
-    t1_id       integer PRIMARY KEY GENERATED ALWAYS BY DEFAULT AS IDENTITY,
     t1_text     text,
     updatetime  timestamp WITHOUT time zone DEFAULT now()
 );
