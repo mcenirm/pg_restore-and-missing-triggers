@@ -28,12 +28,12 @@ jobs:
           --health-retries 5
     steps:
       - uses: actions/checkout@v3
-      - run: |
-          psql --echo-queries --variable=ON_ERROR_STOP=1 --file=tests.sql
-        env:
-          # The hostname used to communicate with the PostgreSQL service container
-          PGHOST: postgres
-          # The default PostgreSQL port
-          PGPORT: 5432
-          PGUSER: postgres
-          PGPASSWORD: postgres
+      - run: bash -eux step1-fixture.sh
+      - run: bash -eux step2-output.sh
+      - run: bash -eux step3-check.sh
+    env:
+      PGHOST: postgres
+      PGPORT: 5432
+      PGDATABASE: test
+      PGUSER: postgres
+      PGPASSWORD: postgres

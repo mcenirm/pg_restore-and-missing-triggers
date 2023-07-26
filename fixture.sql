@@ -1,7 +1,3 @@
-CREATE DATABASE test;
-
-\connect test
-
 CREATE FUNCTION public.update_updatetime()
     RETURNS TRIGGER
     LANGUAGE plpgsql
