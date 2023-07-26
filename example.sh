@@ -25,5 +25,5 @@ run pg_dump --schema-only
 for option in '--schema-only' '--trigger=update_t1_updatetime'
 do
   printf '\n'
-  run pg_restore "$option" ${PGDATABASE}-dump.pg
+  run pg_restore "$option" --file=- ${PGDATABASE}-dump.pg
 done
