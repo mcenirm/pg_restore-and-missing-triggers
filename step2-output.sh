@@ -18,12 +18,14 @@ ri () {
 
 r toc.txt --list
 
+rf all.sql
 rf schema-only.sql --schema-only
 rf data-only.sql   --data-only
 rf pre-data.sql    --section=pre-data
 rf data.sql        --section=data
 rf post-data.sql   --section=post-data
 
+ri all.sql
 ri schema-only.sql --schema-only
 ri data-only.sql   --data-only
 ri pre-data.sql    --section=pre-data

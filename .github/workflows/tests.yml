@@ -30,7 +30,7 @@ jobs:
       - uses: actions/checkout@v3
       - run: bash -eux step1-fixture.sh
       - run: bash -eux step2-output.sh
-      - run: bash  -u  step3-check.sh
+      - run: bash -eux step3-check.sh >> $GITHUB_STEP_SUMMARY
     env:
       PGHOST: postgres
       PGPORT: 5432

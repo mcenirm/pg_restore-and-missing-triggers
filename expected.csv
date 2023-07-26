@@ -1,0 +1,14 @@
+File,Function,Table,Data,Trigger
+toc.txt,Yes,Yes,Yes,Yes
+full-all.sql,Yes,Yes,Yes,Yes
+full-schema-only.sql,Yes,Yes,No,Yes
+full-data-only.sql,No,No,Yes,No
+full-pre-data.sql,Yes,Yes,No,No
+full-data.sql,No,No,Yes,No
+full-post-data.sql,No,No,No,Yes
+itemized-all.sql,Yes,Yes,Yes,Yes
+itemized-schema-only.sql,Yes,Yes,No,Yes
+itemized-data-only.sql,No,No,Yes,No
+itemized-pre-data.sql,Yes,Yes,No,No
+itemized-data.sql,No,No,Yes,No
+itemized-post-data.sql,No,No,No,Yes
