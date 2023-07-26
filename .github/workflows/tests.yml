@@ -7,6 +7,7 @@ on:
 jobs:
   tests:
     strategy:
+      fail-fast: false
       matrix:
         image:
           - "docker.io/library/postgres:16beta2"
