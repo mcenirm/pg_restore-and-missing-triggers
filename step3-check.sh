@@ -75,7 +75,7 @@ do
   check_table    "$File" "$Table"
   check_data     "$File" "$Data"
   check_trigger  "$File" "$Trigger"
-  printf '%n'
+  printf '\n'
 done < expected.csv
 
 $exit_status
