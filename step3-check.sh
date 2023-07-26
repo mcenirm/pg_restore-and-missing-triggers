@@ -9,14 +9,12 @@ check_x () {
   local actual=''
   local grep_args=()
 
-  case "$n" in
-    toc.txt) grep_args=( -F -e "$iftoc" ) ;;
-    *.sql)   grep_args=(    -e "$ifsql" ) ;;
-    *)
-      printf >&2 'ERROR: Unexpected file type: %q\n' "$n"
-      exit 99
-      ;;
-  esac
+  if [ toc.txt = "$n" ]
+  then
+    grep_args=( -F -e "$iftoc" )
+  else
+    grep_args=(    -e "$ifsql" )
+  fi
 
   if grep -q "${grep_args[@]}" -- "$f"
   then
@@ -64,11 +62,19 @@ cat <<EOF
 EOF
 while IFS=, read -r File Function Table Data Trigger
 do
+  case "$File" in
+    File) continue ;;
+    toc.txt|*.sql) : ;;
+    *)
+      printf >&2 'ERROR: Unexpected file type: %q\n' "$n"
+      exit 99
+      ;;
+  esac
   printf '| %q |' "$File"
   check_function "$File" "$Function"
   check_table    "$File" "$Table"
   check_data     "$File" "$Data"
   check_trigger  "$File" "$Trigger"
-done < <(head -n+2 expected.csv)
+done < expected.csv
 
 $exit_status
