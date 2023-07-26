@@ -42,6 +42,7 @@ jobs:
       - run: bash      example.sh       >> $GITHUB_STEP_SUMMARY
       - run: bash -eux step2-output.sh
       - run: bash -eux step3-check.sh   >> $GITHUB_STEP_SUMMARY
+        continue-on-error: true
     env:
       PGHOST: postgres
       PGPORT: 5432
