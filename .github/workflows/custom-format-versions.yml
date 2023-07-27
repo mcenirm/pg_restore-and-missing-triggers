@@ -1,0 +1,49 @@
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  check_versions:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: "docker.io/library/postgres:9.4"
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - run: |
+          cat > pgenv <<EOF
+          PGHOST=$PGHOST
+          PGPORT=$PGPORT
+          PGUSER=$PGUSER
+          PGPASSWORD=$PGPASSWORD
+          EOF
+      - run: echo '| Version | Custom format details |' >> $GITHUB_STEP_SUMMARY
+      - run: echo '| -- | -- |' >> $GITHUB_STEP_SUMMARY
+      - uses: addnab/docker-run-action@v3
+        with:
+          image: "docker.io/library/postgres:16beta2"
+          options: --env-file pgenv -v $GITHUB_STEP_SUMMARY:/summary
+          run: printf '| %s | %s |\n' "$(pg_dump --version)" "$(pg_dump -Fc -f- | file -b -)" | tee -a /summary
+        continue-on-error: true
+        # - "docker.io/library/postgres:15"
+        # - "docker.io/library/postgres:14"
+        # - "docker.io/library/postgres:13"
+        # - "docker.io/library/postgres:12"
+        # - "docker.io/library/postgres:11"
+        # - "docker.io/library/postgres:10"
+        # - "docker.io/library/postgres:9.6"
+        # - "docker.io/library/postgres:9.5"
+        # - "docker.io/library/postgres:9.4"
+    env:
+      PGHOST: postgres
+      PGPORT: 5432
+      PGUSER: postgres
+      PGPASSWORD: postgres
